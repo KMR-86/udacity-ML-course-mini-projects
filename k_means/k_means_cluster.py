@@ -48,18 +48,44 @@ data_dict.pop("TOTAL", 0)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
-feature_3="total_payments"
 poi  = "poi"
 features_list = [poi, feature_1, feature_2]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
+salary_list=[]
+ex_stock_op_list=[]
+for item in finance_features:
+    salary_list.append(numpy.array([item[0]]))
+    ex_stock_op_list.append(numpy.array([item[1]]))
 
+
+
+print((200000.0-min(salary_list))/(max(salary_list)-min(salary_list)))
+print((1000000-min(ex_stock_op_list))/(max(ex_stock_op_list)-min(ex_stock_op_list)))
 finance_features=sorted(finance_features,key=lambda x:x[0])
 print(finance_features)
 
 finance_features=sorted(finance_features,key=lambda x:x[0],reverse=True)
 print(finance_features)
 
+from sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler()
+scalled_salary_list=scaler.fit_transform(salary_list)
+#print(scalled_salary_list)
+
+scalled_ex_stock_op_list=scaler.fit_transform(ex_stock_op_list)
+#print(scalled_ex_stock_op_list)
+
+
+#wrong attempt
+'''for i in range(0,len(finance_features)):
+    print(finance_features[i][0],"    ",finance_features[i][1])
+
+    if finance_features[i][0]==200000.0 and finance_features[i][1]==1000000.0:
+        print("salary ",scalled_salary_list[i])
+        print("stock op ",scalled_ex_stock_op_list[i])'''
+#wrong attempt
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
@@ -78,6 +104,6 @@ pred=kmeans.predict(finance_features)
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, finance_features, poi, mark_poi=False, name="my_clusters.pdf", f1_name=feature_1, f2_name=feature_2)
+    Draw(pred, finance_features, poi, mark_poi=False, name="my_clusters_after_scalling.pdf", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print("no predictions object named pred found, no clusters to plot")
