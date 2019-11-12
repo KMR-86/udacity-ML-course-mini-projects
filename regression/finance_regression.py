@@ -44,6 +44,7 @@ test_color = "r"
 from sklearn.linear_model import LinearRegression
 reg = LinearRegression()
 reg.fit(feature_train,target_train)
+print("the feature train is: ",feature_train)
 print("the slope is ",reg.coef_)
 print("the intercept is",reg.intercept_)
 score=reg.score(feature_test,target_test)
