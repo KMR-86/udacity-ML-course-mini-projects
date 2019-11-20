@@ -53,6 +53,9 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         parsed_email=parsed_email.replace("shackleton", "")
         parsed_email=parsed_email.replace("chris", "")
         parsed_email=parsed_email.replace("germani", "")
+        parsed_email = parsed_email.replace("sshacklensf", "")
+
+        parsed_email = parsed_email.replace("cgermannsf", "")
         ### use str.replace() to remove any instances of the words
         ### ["sara", "shackleton", "chris", "germani"]
 
